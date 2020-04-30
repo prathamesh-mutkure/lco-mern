@@ -1,13 +1,11 @@
 const User = require("../models/user");
 const Order = require("../models/order");
 
+const { handleError } = require("../utils/handleResponse");
+
 exports.getUserByID = (req, res, next, id) => {
   User.findById(id, (err, user) => {
-    if (err || !user) {
-      return res.status(400).json({
-        err: "User not found!",
-      });
-    }
+    if (err || !user) handleError(res, "User not found!", 400);
     req.profile = user;
     next();
   });
@@ -29,11 +27,7 @@ exports.updateUser = (req, res) => {
     { $set: req.body },
     { new: true, useFindAndModify: false },
     (err, user) => {
-      if (err) {
-        return res.status(400).json({
-          err: "Could not update user!",
-        });
-      }
+      if (err) handleError(res, "Could not update user!", 400);
       user.salt = undefined;
       user.encry_password = undefined;
       user.createdAt = undefined;
@@ -48,11 +42,7 @@ exports.userPurchaseList = (req, res) => {
   Order.find({ user: req.profile._id })
     .populate("user", "_id name")
     .exec((err, orders) => {
-      if (err) {
-        return res.status(400).json({
-          err: "Orders not found!",
-        });
-      }
+      if (err) return handleError(res, "Orders not found!", 400);
       return res.json(orders);
     });
 };
@@ -77,11 +67,7 @@ exports.pushOrderInPurchaseList = (req, res, next) => {
     { $push: { purchases: purchases } },
     { new: true },
     (err) => {
-      if (err) {
-        return res.status(400).json({
-          err: "Unable to save purchase list!",
-        });
-      }
+      if (err) handleError(res, "Unable to save purchase list!", 400);
       next();
     }
   );

@@ -1,12 +1,10 @@
 const Category = require("../models/category");
 
+const { handleError, handleSuccess } = require("../utils/handleResponse");
+
 exports.getCategoryById = (req, res, next, id) => {
   Category.findById(id, (err, category) => {
-    if (err || !category) {
-      return res.status(400).json({
-        err: "Category not found!",
-      });
-    }
+    if (err || !category) return handleError(res, "Category not found!", 400);
     req.category = category;
     next();
   });
@@ -15,11 +13,7 @@ exports.getCategoryById = (req, res, next, id) => {
 exports.createCategory = (req, res) => {
   const category = new Category(req.body);
   category.save((err, category) => {
-    if (err) {
-      return res.status(400).json({
-        err: "Could not save category!",
-      });
-    }
+    if (err) return handleError(res, "Could not save category!", 400);
     res.json({ category });
   });
 };
@@ -30,11 +24,7 @@ exports.getCategory = (req, res) => {
 
 exports.getAllCategories = (req, res) => {
   Category.find().exec((err, categories) => {
-    if (err) {
-      return res.status(400).json({
-        err: "Could not get categories!",
-      });
-    }
+    if (err) return handleError(res, "Could not get categories!", 400);
     res.json(categories);
   });
 };
@@ -44,11 +34,7 @@ exports.updateCategory = (req, res) => {
   category.name = req.body.name;
 
   category.save((err, updatedCategory) => {
-    if (err) {
-      res.status(400).json({
-        err: "Could not update Category!",
-      });
-    }
+    if (err) handleError(res, "Could not update Category!", 400);
     res.json(updatedCategory);
   });
 };
@@ -57,13 +43,7 @@ exports.deleteCategory = (req, res) => {
   const category = req.category;
 
   category.remove((err, category) => {
-    if (err) {
-      return res.status(400).json({
-        err: "Could not delete category!",
-      });
-    }
-    res.json({
-      msg: `Deleted ${category.name} category!`,
-    });
+    if (err) handleError(res, "Could not delete category!", 400);
+    handleSuccess(res, `Deleted ${category.name} category!`);
   });
 };

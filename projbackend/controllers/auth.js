@@ -4,6 +4,7 @@ const expressJwt = require("express-jwt");
 var cookieParser = require("cookie-parser");
 
 const User = require("../models/user");
+const { handleError, handleSuccess } = require("../utils/handleResponse");
 
 exports.signup = (req, res) => {
   const errors = validationResult(req);
@@ -21,12 +22,7 @@ exports.signup = (req, res) => {
 
   const user = new User(req.body);
   user.save((err, user) => {
-    if (err) {
-      return res.status(400).json({
-        msg: "Could not save user to DB",
-        err: err,
-      });
-    }
+    if (err) return handleError(res, "Could not save user to DB", 400);
     res.json({
       name: user.name,
       email: user.email,
@@ -39,28 +35,15 @@ exports.signin = (req, res) => {
   const errors = validationResult(req);
   const { email, password } = req.body;
 
-  if (!errors.isEmpty()) {
-    return res.json(errors);
-  }
+  if (!errors.isEmpty()) return res.json(errors);
 
   User.findOne({ email: email }, (err, user) => {
-    if (err) {
-      return res.status(400).json({
-        err: "Database error, please try again!",
-      });
-    }
+    if (err) return handleError(res, "Database error, please try again!", 400);
 
-    if (!user) {
-      return res.status(400).json({
-        err: "User does not exist!",
-      });
-    }
+    if (!user) return handleError(res, "User does not exist!", 400);
 
-    if (!user.authenticate(password)) {
-      return res.status(401).json({
-        err: "Incorrect username or password!",
-      });
-    }
+    if (!user.authenticate(password))
+      return handleError(res, "Incorrect username or password!", 401);
 
     const { _id, name, email, role } = user;
 
@@ -75,9 +58,7 @@ exports.signin = (req, res) => {
 
 exports.signout = (req, res) => {
   res.clearCookie("token");
-  res.json({
-    message: "user signed out!!",
-  });
+  return handleSuccess(res, "user signed out!!");
 };
 
 // Protected routes
@@ -89,20 +70,12 @@ exports.isSignedIn = expressJwt({
 // Custom middleware
 exports.isAuthenticated = (req, res, next) => {
   const check = req.profile && req.auth && req.profile._id == req.auth._id;
-  
-  if (!check) {
-    res.status(403).json({
-      err: "Access Denied!",
-    });
-  }
+
+  if (!check) return handleError(res, "Access Denied!", 403);
   next();
 };
 
 exports.isAdmin = (req, res, next) => {
-  if (req.profile.role === 0) {
-    res.status(403).json({
-      err: "Access Denied!",
-    });
-  }
+  if (req.profile.role === 0) return handleError(res, "Access Denied!", 403);
   next();
 };
