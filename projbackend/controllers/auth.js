@@ -11,12 +11,7 @@ exports.signup = (req, res) => {
 
   if (!errors.isEmpty()) {
     return res.status(422).json({
-      errors: errors.errors.map((error) => {
-        return {
-          msg: error.msg,
-          param: error.param,
-        };
-      }),
+      err: errors.errors[0].msg,
     });
   }
 
@@ -35,7 +30,11 @@ exports.signin = (req, res) => {
   const errors = validationResult(req);
   const { email, password } = req.body;
 
-  if (!errors.isEmpty()) return res.json(errors);
+  if (!errors.isEmpty()) {
+    return res.json({
+      err: errors.errors[0].msg,
+    });
+  }
 
   User.findOne({ email: email }, (err, user) => {
     if (err) return handleError(res, "Database error, please try again!", 400);
