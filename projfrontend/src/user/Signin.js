@@ -29,7 +29,6 @@ const Signin = () => {
           setValues({ ...values, err: data.err, loading: false });
         } else {
           authenticate(data, () => {
-            // setValues({ ...values, loading: true, didRedirect: true });
             setValues({
               email: "",
               password: "",
@@ -46,16 +45,15 @@ const Signin = () => {
   const performRedirect = () => {
     if (didRedirect) {
       if (user && user.role === 1) {
-        return <p>Redirect to Admin</p>;
+        return <Redirect to="/admin/dashboard" />;
       } else {
-        return <p>Redirect to User</p>;
+        return <Redirect to="/user/dashboard" />;
       }
     }
 
-    // TODO: Add redirect routes
-    // if (isAuthenticated) {
-    //   return <Redirect to="/" />;
-    // }
+    if (isAuthenticated) {
+      return <Redirect to="/" />;
+    }
   };
 
   const signinForm = () => {
