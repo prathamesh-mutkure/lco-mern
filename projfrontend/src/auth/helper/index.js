@@ -56,3 +56,11 @@ export const isAuthenticated = () => {
     return JSON.parse(localStorage.getItem("jwt"));
   else return false;
 };
+
+export const isUser = () => {
+  return isAuthenticated() && isAuthenticated().user.role === 0;
+};
+
+export const isAdmin = () => {
+  return isAuthenticated() && isAuthenticated().user.role === 1;
+};

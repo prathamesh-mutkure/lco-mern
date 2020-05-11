@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink, withRouter } from "react-router-dom";
-import { isAuthenticated, signout } from "../../auth/helper";
+import { isAuthenticated, signout, isUser, isAdmin } from "../../auth/helper";
 
 const Menu = ({ history }) => (
   <nav className="navbar navbar-expand-md navbar-dark bg-dark">
@@ -40,7 +40,7 @@ const Menu = ({ history }) => (
           </NavLink>
         </li>
 
-        {isAuthenticated() && isAuthenticated().user.role === 0 && (
+        {isUser() && (
           <li className="nav-item">
             <NavLink
               className="nav-link"
@@ -52,14 +52,14 @@ const Menu = ({ history }) => (
           </li>
         )}
 
-        {isAuthenticated() && isAuthenticated().user.role === 1 && (
+        {isAdmin() && (
           <li className="nav-item">
             <NavLink
               className="nav-link"
               activeClassName="active-nav-link"
               to="/admin/dashboard"
             >
-              A. Dashboard
+              Dashboard
             </NavLink>
           </li>
         )}
