@@ -13,8 +13,8 @@ const Base = ({
     <NavBar />
     <div className="container-fluid">
       <Jumbotron title={title} description={description} />
-      <div className={className}>{children}</div>
     </div>
+    <div className={className}>{children}</div>
     <Footer />
   </div>
 );

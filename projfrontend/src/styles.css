@@ -34,5 +34,22 @@ footer {
 /* Nav Link */
 
 .active-nav-link {
-  color: #2ecc72!important;
+  color: #2ecc72 !important;
+}
+
+/* FAS ICON */
+
+.fas-125 {
+  font-size: 1.25rem;
+  padding: 1rem;
+  color: #53A846 !important;
+}
+
+.fas-125:hover {
+  transform: scale(1.5);
+  transition: transform 0.2s;
+}
+
+.text-125 {
+  font-size: 1.25rem;
 }

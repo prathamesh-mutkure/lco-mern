@@ -72,20 +72,27 @@ exports.updateProduct = (req, res) => {
   form.parse(req, (err, fields, files) => {
     if (err) return handleError(res, "Could not process image!!", 400);
 
-    const product = { ...req.product, ...fields };
-
     if (files.photo) {
       if (files.photo.size > 2097152)
         return handleError(res, "Image exceeds 2MB limit!", 400);
 
-      product.photo.data = fs.readFileSync(files.photo.path);
-      product.photo.contentType = files.photo.type;
+      const photo = {
+        data: fs.readFileSync(files.photo.path),
+        contentType: files.photo.type,
+      };
+
+      fields.photo = photo;
     }
 
-    product.save((err, product) => {
-      if (err) return handleError(res, "Could not update user!", 400);
-      res.json(product);
-    });
+    Product.findByIdAndUpdate(
+      req.product._id,
+      { $set: fields },
+      { new: true, useFindAndModify: false },
+      (err, product) => {
+        if (err) return handleError(res, "Could not update user!", 400);
+        else res.json(product);
+      }
+    );
   });
 };
 

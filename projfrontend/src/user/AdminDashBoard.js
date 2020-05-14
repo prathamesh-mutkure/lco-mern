@@ -19,6 +19,11 @@ const AdminDashBoard = () => {
             </Link>
           </li>
           <li className="list-group-item">
+            <Link to="/admin/categories" className="text-success">
+              Manage Categories
+            </Link>
+          </li>
+          <li className="list-group-item">
             <Link to="/admin/create/product" className="text-success">
               Create Products
             </Link>
@@ -66,8 +71,8 @@ const AdminDashBoard = () => {
       className="container bg-success p-4"
     >
       <div className="row">
-        <div className="col-3">{adminLeftSide()}</div>
-        <div className="col-9">{adminRightSide()}</div>
+        <div className="col-sm-12 col-md-3">{adminLeftSide()}</div>
+        <div className="col-sm-12 col-md-9">{adminRightSide()}</div>
       </div>
     </Base>
   );
