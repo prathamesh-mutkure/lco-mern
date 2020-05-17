@@ -42,7 +42,7 @@ footer {
 .fas-125 {
   font-size: 1.25rem;
   padding: 1rem;
-  color: #53A846 !important;
+  color: #53a846 !important;
 }
 
 .fas-125:hover {
@@ -52,4 +52,15 @@ footer {
 
 .text-125 {
   font-size: 1.25rem;
+}
+
+/* CART */
+
+.cart-img {
+  max-width: 100%;
+  padding: 1rem;
+}
+
+.cart-info {
+  padding: 1rem;
 }
