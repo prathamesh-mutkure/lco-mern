@@ -4,7 +4,7 @@ import { removeItemFromCart } from "../helper/CartHelper";
 
 const CartCard = ({ product, reload }) => {
   return (
-    <div className="card w-75 text-white bg-dark border-success mb-3">
+    <div className="card text-white bg-dark border-success mb-3">
       <div className="row">
         <div className="col-sm-1 col-md-4 col-lg-4">
           <ImageHelper productId={product._id} className="cart-img" />

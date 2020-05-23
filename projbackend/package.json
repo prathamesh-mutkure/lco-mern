@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "braintree": "^2.23.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -24,6 +25,7 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.19.4",
     "npm": "^6.13.0",
+    "stripe": "^8.53.0",
     "uuid": "^3.3.3"
   }
 }

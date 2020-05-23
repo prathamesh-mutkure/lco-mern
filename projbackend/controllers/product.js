@@ -121,7 +121,7 @@ exports.getPhoto = (req, res, next) => {
 };
 
 exports.updateInventory = (req, res, next) => {
-  const bulkProductQueries = req.order.products.map((product) => {
+  const bulkProductQueries = req.body.order.products.map((product) => {
     return {
       updateOne: {
         filter: { _id: product._id },

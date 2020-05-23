@@ -15,3 +15,12 @@ export const createOrder = (userId, token, orderData) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const getOrderTotal = (products) => {
+  let total = 0;
+  products.map((product) => {
+    total = total + product.price * product.count;
+    return 0;
+  });
+  return total;
+};
