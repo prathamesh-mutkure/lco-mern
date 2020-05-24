@@ -5,6 +5,7 @@ import { getAllCartItems } from "./helper/CartHelper";
 import { getOrderTotal } from "./helper/OrderHelper";
 import StripeCheckoutComponent from "./StripeCheckoutComponent";
 import BraintreeCheckout from "./BraintreeCheckout";
+import { isAuthenticated } from "../auth/helper";
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
@@ -22,12 +23,18 @@ const Cart = () => {
     return (
       <div className="row">
         <div className="col-md-6 col-md-push-6">
-          <div className="card text-white bg-dark border-success p-3">
+          <div className="card text-white bg-dark border-success p-3 mb-2">
             <h3 className="text-white">
               Total amount is ${products && getOrderTotal(products)}
             </h3>
-            <StripeCheckoutComponent products={products} />
-            <BraintreeCheckout products={products} reload={reloadPage} />
+            {isAuthenticated() ? (
+              <div>
+                <BraintreeCheckout products={products} reload={reloadPage} />
+                <StripeCheckoutComponent products={products} />
+              </div>
+            ) : (
+              <h3 className="text-white">Please login to checkout</h3>
+            )}
           </div>
         </div>
         <div className="col-md-6">
@@ -51,7 +58,7 @@ const Cart = () => {
       description="Product checkout section"
       className="container"
     >
-      {products.length > 0 ? (
+      {products !== null && products.length > 0 ? (
         displayProducts()
       ) : (
         <div className="text-center">

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import { isAuthenticated, signout, isUser, isAdmin } from "../../auth/helper";
 
 const Menu = ({ history }) => (

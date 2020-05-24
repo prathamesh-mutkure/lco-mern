@@ -44,7 +44,9 @@ const StripeCheckoutComponent = ({ products }) => {
         shippingAddress
         billingAddress
       >
-        <button className="btn btn-success btn-block">Pay with Stripe</button>
+        <button className="btn btn-success btn-block mb-2 mt-2">
+          Pay with Stripe
+        </button>
       </StripeCheckout>
     ) : null;
   };
