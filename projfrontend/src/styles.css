@@ -64,3 +64,15 @@ footer {
 .cart-info {
   padding: 1rem;
 }
+
+/* CATEGORY */
+
+.cat-card {
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+.cat-card p {
+  margin: auto auto;
+  padding: 1rem;
+}
