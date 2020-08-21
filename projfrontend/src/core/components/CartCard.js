@@ -6,7 +6,7 @@ const CartCard = ({ product, reload }) => {
   return (
     <div className="card text-white bg-dark border-success mb-3">
       <div className="row">
-        <div className="col-sm-1 col-md-4 col-lg-4">
+        <div className="col-sm-1 col-md-5 col-lg-5 align-items-center">
           <ImageHelper productId={product._id} className="cart-img" />
         </div>
         <div className="col">

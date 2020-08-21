@@ -57,8 +57,10 @@ footer {
 /* CART */
 
 .cart-img {
+  display: block;
   max-width: 100%;
   padding: 1rem;
+  margin: auto;
 }
 
 .cart-info {
